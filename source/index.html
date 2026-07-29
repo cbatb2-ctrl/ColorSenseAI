@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColorSense AI Classroom</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+<div id="app">
+
+    <!-- หน้าแรก -->
+    <section id="home">
+
+        <h1>🎨 ColorSense AI Classroom</h1>
+
+        <p>นวัตกรรมช่วยประเมินทักษะการผสมสี</p>
+
+        <input
+            type="text"
+            id="studentName"
+            placeholder="ชื่อ - สกุล">
+
+        <input
+            type="number"
+            id="studentNo"
+            placeholder="เลขที่">
+
+        <input
+            type="text"
+            id="studentRoom"
+            placeholder="ห้อง เช่น ม.3/1">
+
+        <button id="startBtn">
+            เริ่มกิจกรรม
+        </button>
+
+    </section>
+
+    <!-- หน้ากล้อง -->
+    <section id="cameraPage" style="display:none;">
+
+        <h2>📷 วิเคราะห์สี</h2>
+
+        <video
+            id="video"
+            autoplay
+            playsinline>
+        </video>
+        <canvas
+    id="canvas"
+    width="320"
+    height="240"
+    style="display:none;">
+</canvas>
+
+<div id="colorInfo">
+
+    <h3>🎯 สีต้นแบบ</h3>
+
+<div id="referenceColor"></div>
+
+<p id="referenceRGB">
+ยังไม่ได้ตั้งสีต้นแบบ
+
+</p>
+
+<button id="saveReference">
+
+📌 ตั้งเป็นสีต้นแบบ
+
+</button>
+<button id="recordAttempt" disabled>
+
+🎯 บันทึกผลการทดลอง
+
+</button>
+<button id="submitScore">
+    ✅ ส่งคะแนน
+</button>
+<hr>
+<hr>
+
+<h3>🎨 การทดลอง</h3>
+
+<div id="attemptBox">
+
+    ทดลองครั้งที่ <span id="attemptNo">1</span> / 3
+
+</div>
+
+<p id="attemptStatus">
+
+เหลืออีก 3 ครั้ง
+</p>
+<h3>🎯 ความเหมือนของสี</h3>
+
+<div id="similarityValue">
+0%
+</div>
+<p id="resultText">
+-
+</p>
+
+<hr>
+    <div id="previewColor"></div>
+
+    <p>R :
+        <span id="rValue">0</span>
+    </p>
+
+    <p>G :
+        <span id="gValue">0</span>
+    </p>
+
+    <p>B :
+        <span id="bValue">0</span>
+    </p>
+
+</div>
+
+        <div id="targetCircle"></div>
+
+        <button id="backBtn">
+            ← กลับ
+        </button>
+
+    </section>
+
+</div>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/camera.js"></script>
+
+</body>
+</html>

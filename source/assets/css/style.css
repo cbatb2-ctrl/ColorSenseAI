@@ -1,0 +1,203 @@
+body{
+
+    margin:0;
+    font-family:sans-serif;
+    background:#f3f5fb;
+}
+
+#app{
+
+    max-width:420px;
+    margin:auto;
+    padding:20px;
+}
+
+h1,h2{
+
+    text-align:center;
+    color:#3056d3;
+}
+
+input{
+
+    width:100%;
+    padding:14px;
+    margin:10px 0;
+    font-size:18px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    box-sizing:border-box;
+}
+
+button{
+
+    width:100%;
+    padding:15px;
+    margin-top:15px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    background:#3056d3;
+    color:white;
+    cursor:pointer;
+}
+
+video{
+
+    width:100%;
+    border-radius:15px;
+    background:black;
+}
+
+#cameraPage{
+
+    position:relative;
+}
+
+#targetCircle{
+
+    position:absolute;
+
+    width:140px;
+    height:140px;
+
+    border:5px solid yellow;
+
+    border-radius:50%;
+
+    top:45%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    pointer-events:none;
+}
+#colorInfo{
+
+    margin-top:20px;
+
+    background:white;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+
+}
+
+#previewColor{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    border:3px solid #444;
+
+    background:black;
+
+    margin-bottom:15px;
+
+}
+#referenceColor{
+
+width:90px;
+
+height:90px;
+
+margin:auto;
+
+border-radius:50%;
+
+background:#ddd;
+
+border:3px solid #444;
+
+margin-bottom:10px;
+
+}
+
+#saveReference{
+
+margin-top:10px;
+
+padding:12px 20px;
+
+border:none;
+
+border-radius:10px;
+
+background:#28a745;
+
+color:white;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+#saveReference:hover{
+
+background:#218838;
+
+}
+/* ===============================
+   Similarity
+=============================== */
+
+#similarityValue{
+
+    font-size:42px;
+    font-weight:bold;
+    text-align:center;
+    color:#1976d2;
+    margin:15px 0;
+
+}
+/* ===============================
+   Result Text
+=============================== */
+
+#resultText{
+
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    margin-top:10px;
+
+}
+/* ===============================
+   Submit Score Button
+=============================== */
+
+#submitScore{
+
+    width:100%;
+    margin-top:10px;
+    padding:15px;
+
+    background:#1976d2;
+    color:white;
+
+    border:none;
+    border-radius:10px;
+
+    font-size:18px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+#submitScore:hover{
+
+    background:#1565c0;
+
+}
