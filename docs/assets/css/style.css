@@ -201,3 +201,65 @@ background:#218838;
     background:#1565c0;
 
 }
+/* ===== Version 3 : RGB แบบบรรทัดเดียว ===== */
+
+#liveRGB{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    text-align:center;
+
+    margin-top:10px;
+
+    margin-bottom:15px;
+
+    color:#333;
+
+}
+/* ===== Version 3 Header ===== */
+
+.version{
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    color:#4A90E2;
+
+    margin-top:-5px;
+
+}
+
+.subtitle{
+
+    font-size:15px;
+
+    color:#666;
+
+    margin-bottom:18px;
+
+}
+
+.developerBox{
+
+    background:#f7f9fc;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    margin:15px auto 25px;
+
+    max-width:320px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+}
+
+.developerBox p{
+
+    margin:5px 0;
+
+}

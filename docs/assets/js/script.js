@@ -1,7 +1,7 @@
 const startBtn=document.getElementById("startBtn");
 const backBtn=document.getElementById("backBtn");
 
-const home=document.getElementById("home");
+const home=document.getElementById("startPage");
 const cameraPage=document.getElementById("cameraPage");
 
 startBtn.onclick=()=>{

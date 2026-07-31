@@ -435,7 +435,7 @@ else {
     submitBtn.disabled = false;
 
     alert(
-        `🏆 ทดลองครบ 3 ครั้งแล้ว\n\n` +
+        `🏆 ทดลองครบ 4 ครั้งแล้ว\n\n` +
         `Best Score : ${bestScore.toFixed(2)}%\n\n` +
         `สามารถกดส่งคะแนนได้`
     );
