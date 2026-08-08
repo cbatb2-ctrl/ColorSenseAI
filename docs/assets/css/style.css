@@ -54,24 +54,6 @@ video{
     position:relative;
 }
 
-#targetCircle{
-
-    position:absolute;
-
-    width:140px;
-    height:140px;
-
-    border:5px solid yellow;
-
-    border-radius:50%;
-
-    top:45%;
-    left:50%;
-
-    transform:translate(-50%,-50%);
-
-    pointer-events:none;
-}
 #colorInfo{
 
     margin-top:20px;
@@ -261,5 +243,294 @@ background:#218838;
 .developerBox p{
 
     margin:5px 0;
+
+}
+/* =======================================
+   Version 3
+   Reference Card
+======================================= */
+
+.card{
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    margin:18px auto;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+}
+
+.referenceCard h3{
+
+    text-align:center;
+
+    margin-bottom:18px;
+
+}
+
+.colorCircle{
+
+    width:110px;
+
+    height:110px;
+
+    border-radius:50%;
+
+    margin:0 auto 15px;
+
+    border:4px solid #e6e6e6;
+
+}
+
+#referenceRGB{
+
+    text-align:center;
+
+    font-size:15px;
+
+    color:#555;
+
+    margin-bottom:18px;
+
+}
+
+#saveReference{
+
+    width:100%;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#4A90E2;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+#saveReference:hover{
+
+    background:#357BD8;
+
+}
+/* ===== Record Button Complete ===== */
+
+#recordAttempt.finished{
+
+    background:#dc3545;
+
+    color:white;
+
+    cursor:not-allowed;
+
+    opacity:1;
+
+}
+/* ======================================
+   ColorSense AI Version 3.5
+   Professional Card System
+====================================== */
+
+.appHeader{
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+}
+
+.appHeader h1{
+
+    font-size:2rem;
+
+    margin-bottom:10px;
+
+}
+
+.version{
+
+    font-size:1rem;
+
+    color:#666;
+
+    margin-bottom:8px;
+
+}
+
+.subtitle{
+
+    color:#888;
+
+    margin-bottom:15px;
+
+}
+
+.developerBox{
+
+    background:#f5f7fb;
+
+    border-radius:14px;
+
+    padding:12px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+}
+
+.card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    margin:18px auto;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+
+    transition:.25s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 24px rgba(0,0,0,.12);
+
+}
+
+.card h3{
+
+    margin-top:0;
+
+    text-align:center;
+
+}
+
+.actionCard button{
+
+    width:100%;
+
+    margin-top:12px;
+
+}
+/* ======================================
+   Student Information Card
+====================================== */
+
+.studentCard{
+
+    max-width:420px;
+
+    margin:auto;
+
+}
+
+.studentCard h2{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+}
+
+.studentCard input{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    box-sizing:border-box;
+
+}
+
+.statusBox{
+
+    background:#e8f5e9;
+
+    color:#2e7d32;
+
+    text-align:center;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    margin:15px 0;
+
+}
+
+#startBtn{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+/* ======================================
+   AI Coach Card
+====================================== */
+
+.aiCoachCard{
+
+    border-left:6px solid #4caf50;
+
+}
+
+#aiCoachMessage{
+
+    background:#f1fff3;
+
+    border:1px solid #b7e4c7;
+
+    border-radius:12px;
+
+    padding:16px;
+
+    color:#2e7d32;
+
+    font-size:16px;
+
+    line-height:1.6;
+
+    text-align:left;
+
+    white-space:pre-line;
+
+    min-height:70px;
 
 }

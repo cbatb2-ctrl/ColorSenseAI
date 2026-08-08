@@ -1,25 +1,44 @@
-// ==========================================
+// =============================================
 // ColorSense AI Classroom
-// camera.js
-// FINAL VERSION
+// Version 4.0 Professional (Clean)
 // Part 1
-// ==========================================
+// =============================================
 
-// ---------- Video ----------
-const video = document.getElementById("video");
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d", {
-    willReadFrequently: true
+console.log("ColorSense AI V4.0 Clean");
+
+// =============================================
+// DOM
+// =============================================
+
+// ---------- Camera ----------
+
+const video =
+document.getElementById("video");
+
+const canvas =
+document.getElementById("canvas");
+
+const ctx =
+canvas.getContext("2d",{
+    willReadFrequently:true
 });
 
 // ---------- Preview ----------
-const previewColor = document.getElementById("previewColor");
 
-const rValue = document.getElementById("rValue");
-const gValue = document.getElementById("gValue");
-const bValue = document.getElementById("bValue");
+const previewColor =
+document.getElementById("previewColor");
+
+const rValue =
+document.getElementById("rValue");
+
+const gValue =
+document.getElementById("gValue");
+
+const bValue =
+document.getElementById("bValue");
 
 // ---------- Reference ----------
+
 const referenceBox =
 document.getElementById("referenceColor");
 
@@ -28,99 +47,97 @@ document.getElementById("referenceRGB");
 
 const saveBtn =
 document.getElementById("saveReference");
+
+// ---------- Attempt ----------
+
 const recordBtn =
 document.getElementById("recordAttempt");
 
-// ---------- Result ----------
-const similarityValue =
-document.getElementById("similarityValue");
-
-const resultText =
-document.getElementById("resultText");
 const attemptNo =
 document.getElementById("attemptNo");
 
 const attemptStatus =
 document.getElementById("attemptStatus");
 
-// ---------- Send ----------
+// ---------- Result ----------
+
+const similarityValue =
+document.getElementById("similarityValue");
+
+const resultText =
+document.getElementById("resultText");
+
+// ---------- Submit ----------
+
 const submitBtn =
 document.getElementById("submitScore");
 
-// ---------- Google Apps Script ----------
+// ==========================================
+// Google Apps Script URL
+// ==========================================
+
 const API_URL =
 "https://script.google.com/macros/s/AKfycbzElmsd4rp9XGlBlAb1Fw3QxprvHzuP34dmObKe5Dz_8TjjWO2w3RoSRQgzmVILDpb2/exec";
 
-// ---------- Variables ----------
+// =============================================
+// Runtime Variables
+// =============================================
+
 let stream = null;
+
 let scanInterval = null;
+
+let scanStopped = false;
+
+// RGB ปัจจุบัน
 
 let currentR = 0;
 let currentG = 0;
 let currentB = 0;
 
+// สีต้นแบบ
+
 let referenceColor = null;
 
-// ==========================================
-// Sprint 6 : Best Score System
-// ==========================================
+// Attempt
 
-// ทดลองครั้งที่เท่าไร
-let attempt = 1;
+let attempt = 0;
 
-// คะแนนแต่ละครั้ง
+// คะแนน
+
 let score1 = null;
 let score2 = null;
 let score3 = null;
 
-// คะแนนดีที่สุด
 let bestScore = 0;
 
-// RGB ของคะแนนที่ดีที่สุด
 let bestRGB = null;
+// ==========================================
+// RGB ของแต่ละรอบ
+// ==========================================
 
-// ส่งคะแนนแล้วหรือยัง
+let rgbAttempt1 = null;
+let rgbAttempt2 = null;
+let rgbAttempt3 = null;
+
+// ส่งคะแนนแล้ว
+
 let submitted = false;
-// ==========================================
-// อัปเดตสถานะการทดลอง
-// ==========================================
-
-function updateAttemptUI(){
-
-    attemptNo.textContent = attempt;
-
-    const remain = 3 - attempt;
-
-    if(remain > 0){
-
-        attemptStatus.textContent =
-        `เหลืออีก ${remain} ครั้ง`;
-
-    }
-
-    else{
-
-        attemptStatus.textContent =
-        "ทดลองครบแล้ว";
-
-    }
-
-}
-
-// ==========================================
-// เปิดกล้อง
-// ==========================================
+// =============================================
+// Camera Module
+// =============================================
 
 async function startCamera(){
 
     try{
 
-        stream =
-        await navigator.mediaDevices.getUserMedia({
+        stream = await navigator.mediaDevices.getUserMedia({
 
             video:{
                 facingMode:"environment"
-            }
+            },
+
+            audio:false
 
         });
 
@@ -128,20 +145,16 @@ async function startCamera(){
 
         video.onloadedmetadata = ()=>{
 
-            video.play();
-
-            canvas.width =
-            video.videoWidth;
-
-            canvas.height =
-            video.videoHeight;
-
             console.log("✅ Camera Ready");
 
-            startColorReader();
-            updateAttemptUI();
             submitBtn.disabled = true;
             recordBtn.disabled = true;
+
+            scanStopped = false;
+
+            startColorReader();
+
+            updateAttemptUI();
 
         };
 
@@ -157,16 +170,15 @@ async function startCamera(){
 
 }
 
-
-// ==========================================
-// ปิดกล้อง
-// ==========================================
+// =============================================
 
 function stopCamera(){
 
     if(scanInterval){
 
         clearInterval(scanInterval);
+
+        scanInterval = null;
 
     }
 
@@ -178,35 +190,58 @@ function stopCamera(){
 
         });
 
+        stream = null;
+
     }
 
 }
 
-
-// ==========================================
-// เริ่มอ่านสี
-// ==========================================
+// =============================================
 
 function startColorReader(){
 
     scanInterval = setInterval(()=>{
 
+        if(scanStopped){
+
+            return;
+
+        }
+
         readCenterPixel();
 
     },100);
 
-}// ==========================================
-// อ่าน Pixel ตรงกลาง
-// ==========================================
+}
+// =============================================
+// Temporary Functions
+// (จะเขียนจริงใน Part ถัดไป)
+// =============================================
+
+function updateAttemptUI(){
+
+    attemptNo.textContent = attempt;
+
+    attemptStatus.textContent =
+    `เหลืออีก ${3-attempt} ครั้ง`;
+
+}
+// =============================================
+// RGB Engine
+// =============================================
 
 function readCenterPixel(){
 
+    if(scanStopped) return;
+
     ctx.drawImage(
+
         video,
         0,
         0,
         canvas.width,
         canvas.height
+
     );
 
     const centerX = Math.floor(canvas.width / 2);
@@ -219,12 +254,12 @@ function readCenterPixel(){
     let totalG = 0;
     let totalB = 0;
     let count = 0;
-
-    for(let y=centerY-half; y<=centerY+half; y++){
+        for(let y=centerY-half; y<=centerY+half; y++){
 
         for(let x=centerX-half; x<=centerX+half; x++){
 
             const pixel =
+
             ctx.getImageData(x,y,1,1).data;
 
             totalR += pixel[0];
@@ -237,26 +272,22 @@ function readCenterPixel(){
 
     }
 
-    currentR = Math.round(totalR/count);
-    currentG = Math.round(totalG/count);
-    currentB = Math.round(totalB/count);
-
-    rValue.textContent = currentR;
+    currentR = Math.round(totalR / count);
+    currentG = Math.round(totalG / count);
+    currentB = Math.round(totalB / count);
+        rValue.textContent = currentR;
     gValue.textContent = currentG;
     bValue.textContent = currentB;
 
     previewColor.style.background =
-    `rgb(${currentR},${currentG},${currentB})`;
 
-    calculateSimilarity();
+        `rgb(${currentR},${currentG},${currentB})`;
+        calculateSimilarity();
 
 }
-
-
-
-// ==========================================
-// ตั้งสีต้นแบบ
-// ==========================================
+// =============================================
+// Reference Color
+// =============================================
 
 saveBtn.addEventListener("click",()=>{
 
@@ -269,39 +300,38 @@ saveBtn.addEventListener("click",()=>{
     };
 
     referenceBox.style.background=
-    `rgb(${currentR},${currentG},${currentB})`;
 
-    referenceText.innerHTML=`
+        `rgb(${currentR},${currentG},${currentB})`;
 
-        R : ${currentR}<br>
-        G : ${currentG}<br>
-        B : ${currentB}
+    referenceText.innerHTML=
 
-    `;
+        `R : ${currentR}<br>
+         G : ${currentG}<br>
+         B : ${currentB}`;
 
-    console.log("✅ ตั้งสีต้นแบบแล้ว", referenceColor);
-    recordBtn.disabled = false;
+    recordBtn.disabled=false;
+
+    console.log("🎯 Reference Saved",referenceColor);
 
 });
-// ==========================================
-// คำนวณเปอร์เซ็นต์ความเหมือน
-// ==========================================
+// =============================================
+// Similarity Engine
+// =============================================
 
 function calculateSimilarity(){
 
-    // ยังไม่ได้ตั้งสีต้นแบบ
     if(referenceColor==null){
 
         similarityValue.textContent="0.00%";
-        resultText.textContent="ยังไม่ได้ตั้งสีต้นแบบ";
+
+        resultText.textContent=
+        "ยังไม่ได้ตั้งสีต้นแบบ";
 
         return;
 
     }
 
-    // คำนวณระยะห่างของ RGB
-
-    const distance = Math.sqrt(
+    const distance=Math.sqrt(
 
         Math.pow(currentR-referenceColor.r,2)+
         Math.pow(currentG-referenceColor.g,2)+
@@ -309,7 +339,7 @@ function calculateSimilarity(){
 
     );
 
-    const maxDistance = Math.sqrt(
+    const maxDistance=Math.sqrt(
 
         255*255+
         255*255+
@@ -317,7 +347,8 @@ function calculateSimilarity(){
 
     );
 
-    let similarity =
+    let similarity=
+
     100-((distance/maxDistance)*100);
 
     if(similarity<0){
@@ -327,11 +358,9 @@ function calculateSimilarity(){
     }
 
     similarityValue.textContent=
-    similarity.toFixed(2)+"%";
 
-    // ---------- ผลการประเมิน ----------
-
-    if(similarity>=95){
+        similarity.toFixed(2)+"%";
+            if(similarity>=95){
 
         resultText.textContent="🟢 ดีมาก";
 
@@ -356,34 +385,62 @@ function calculateSimilarity(){
     }
 
 }
-// ==========================================
-// บันทึกคะแนนการทดลอง
-// ==========================================
+// =============================================
+// Attempt Engine
+// Part 5 STEP 1
+// =============================================
 
 function saveAttempt(){
 
-    const score =
-    parseFloat(similarityValue.textContent);
+    const score = parseFloat(
+        similarityValue.textContent
+    );
 
-    if(attempt === 1){
+    switch(attempt){
+
+    case 0:
 
         score1 = score;
 
-    }
+        rgbAttempt1 = {
 
-    else if(attempt === 2){
+            r: currentR,
+            g: currentG,
+            b: currentB
+
+        };
+
+        break;
+
+    case 1:
 
         score2 = score;
 
-    }
+        rgbAttempt2 = {
 
-    else if(attempt === 3){
+            r: currentR,
+            g: currentG,
+            b: currentB
+
+        };
+
+        break;
+
+    case 2:
 
         score3 = score;
 
-    }
+        rgbAttempt3 = {
 
-    // อัปเดตคะแนนดีที่สุด
+            r: currentR,
+            g: currentG,
+            b: currentB
+
+        };
+
+        break;
+
+}
 
     if(score > bestScore){
 
@@ -399,136 +456,254 @@ function saveAttempt(){
 
     }
 
-    console.log("Attempt :", attempt);
-
-    console.log("Best :", bestScore);
+    console.log("Best Score :",bestScore);
 
 }
-// ==========================================
-// บันทึกผลการทดลอง
-// ==========================================
+// =============================================
+
+function updateAttemptUI(){
+
+    attemptNo.textContent = attempt;
+
+    const remain = 3 - attempt;
+
+    if(remain > 0){
+
+        attemptStatus.textContent =
+
+        `เหลืออีก ${remain} ครั้ง`;
+
+    }
+
+    else{
+
+        attemptStatus.textContent =
+
+        "ทดลองครบแล้ว";
+
+    }
+
+}
+// =============================================
+// Record Attempt
+// Part 5 STEP 2
+// =============================================
 
 recordBtn.addEventListener("click",()=>{
 
-    // บันทึกคะแนนรอบปัจจุบัน
-saveAttempt();
+    // ป้องกันการกดเกิน
+    if(attempt >= 3){
 
-if (attempt < 3) {
-
-    attempt++;
-
-    updateAttemptUI();
-
-    // แจ้งสถานะบนหน้าเว็บ (เดี๋ยวเราจะเปลี่ยนเป็น Status Box)
-    alert(
-        `✅ บันทึกผลการทดลองครั้งที่ ${attempt - 1} แล้ว\n\n` +
-        `คะแนนดีที่สุดปัจจุบัน : ${bestScore.toFixed(2)}%`
-    );
-
-}
-else {
-
-    updateAttemptUI();
-
-    recordBtn.disabled = true;
-
-    submitBtn.disabled = false;
-
-    alert(
-        `🏆 ทดลองครบ 4 ครั้งแล้ว\n\n` +
-        `Best Score : ${bestScore.toFixed(2)}%\n\n` +
-        `สามารถกดส่งคะแนนได้`
-    );
-
-}
-
-});
-// ==========================================
-// ส่งคะแนนเข้า Google Sheets
-// ==========================================
-
-submitBtn.addEventListener("click", async () => {
-    if(attempt < 3){
-
-    alert("กรุณาทดลองให้ครบ 3 ครั้งก่อน");
-
-    return;
-
-}
-
-    if(referenceColor == null){
-
-        alert("กรุณาตั้งสีต้นแบบก่อน");
         return;
 
     }
 
-    const formData = new URLSearchParams();
+    // บันทึกคะแนนรอบปัจจุบัน
+    saveAttempt();
+    // ==========================================
+// AI Coach
+// ==========================================
 
-    formData.append("name",
-        document.getElementById("studentName").value);
+if(attempt === 0){
 
-    formData.append("number",
-        document.getElementById("studentNo").value);
-
-    formData.append("classroom",
-        document.getElementById("studentRoom").value);
-
-    formData.append("r", currentR);
-    formData.append("g", currentG);
-    formData.append("b", currentB);
-
-    formData.append("similarity",
-        similarityValue.textContent);
-
-    formData.append("result",
-        resultText.textContent);
-
-    formData.append("referenceR",
-        referenceColor.r);
-
-    formData.append("referenceG",
-        referenceColor.g);
-
-    formData.append("referenceB",
-        referenceColor.b);
-
-    try {
-
-    await fetch(API_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-    });
-
-    // แสดงข้อความหลังส่งสำเร็จ
-    alert(
-`🎉 ส่งคะแนนเรียบร้อย
-
-👤 ชื่อ : ${document.getElementById("studentName").value}
-
-🏫 ห้อง : ${document.getElementById("studentRoom").value}
-🔢 เลขที่ : ${document.getElementById("studentNo").value}
-
-🎨 ความเหมือนของสี : ${similarityValue.textContent}
-
-${resultText.textContent}
-
-📅 บันทึกลง Google Sheets แล้ว`
+    updateAICoach(
+        rgbAttempt1,
+        referenceColor,
+        score1,
+        1
     );
 
-    // ป้องกันการกดส่งซ้ำ
+}
+else if(attempt === 1){
+
+    updateAICoach(
+        rgbAttempt2,
+        referenceColor,
+        score2,
+        2
+    );
+
+}
+else if(attempt === 2){
+
+    updateAICoach(
+        rgbAttempt3,
+        referenceColor,
+        score3,
+        3
+    );
+
+}
+else if(attempt === 2){
+
+    updateAICoach(
+        rgbAttempt3,
+        referenceColor,
+        score3,
+        3
+    );
+
+}
+    // เพิ่มจำนวนครั้ง
+    attempt++;
+
+    // อัปเดตหน้าจอ
+    updateAttemptUI();
+
+    // แสดงคะแนนที่ดีที่สุดปัจจุบัน
+    alert(
+
+        `✅ บันทึกผลการทดลองครั้งที่ ${attempt}\n\n` +
+
+        `คะแนนดีที่สุด : ${bestScore.toFixed(2)}%`
+
+    );
+
+    // ถ้าครบ 3 ครั้ง
+    if(attempt >= 3){
+
+        scanStopped = true;
+
+        stopCamera();
+
+        recordBtn.disabled = true;
+
+        submitBtn.disabled = false;
+
+        similarityValue.classList.add("locked");
+
+        resultText.textContent =
+
+        "🏁 สิ้นสุดการทดลอง";
+
+        alert(
+
+            `🎉 ทดลองครบ 3 ครั้งแล้ว\n\n` +
+
+            `Best Score : ${bestScore.toFixed(2)}%\n\n` +
+
+            `สามารถกดส่งคะแนนได้`
+
+        );
+
+    }
+
+});
+// =============================================
+// Submit Engine
+// Part 6 STEP 1
+// =============================================
+
+submitBtn.addEventListener("click", async ()=>{
+
+    // ต้องทดลองครบก่อน
+    if(attempt < 3){
+
+        alert("กรุณาทดลองให้ครบ 3 ครั้งก่อน");
+
+        return;
+
+    }
+
+    // ต้องตั้งสีต้นแบบก่อน
+    if(referenceColor == null){
+
+        alert("กรุณาตั้งสีต้นแบบก่อน");
+
+        return;
+
+    }
+
+    alert("✅ Submit Engine ทำงานแล้ว");
+    // ===============================
+// เตรียมข้อมูลสำหรับส่ง
+// ===============================
+
+const formData = new URLSearchParams();
+
+formData.append(
+    "name",
+    document.getElementById("studentName").value
+);
+
+formData.append(
+    "number",
+    document.getElementById("studentNo").value
+);
+
+formData.append(
+    "classroom",
+    document.getElementById("studentRoom").value
+);
+
+formData.append("r", currentR);
+formData.append("g", currentG);
+formData.append("b", currentB);
+
+formData.append(
+    "similarity",
+    bestScore.toFixed(2)
+);
+
+formData.append(
+    "result",
+    resultText.textContent
+);
+
+formData.append(
+    "referenceR",
+    referenceColor.r
+);
+
+formData.append(
+    "referenceG",
+    referenceColor.g
+);
+
+formData.append(
+    "referenceB",
+    referenceColor.b
+);
+
+try{
+
+    await fetch(API_URL,{
+
+        method:"POST",
+        mode:"no-cors",
+        body:formData
+
+    });
+
+    alert(
+
+`🎉 ส่งคะแนนเรียบร้อย
+
+👤 ${document.getElementById("studentName").value}
+
+🎯 Best Score : ${bestScore.toFixed(2)}%
+
+📊 Attempt
+
+1 : ${score1}
+2 : ${score2}
+3 : ${score3}
+
+บันทึกลง Google Sheets แล้ว`
+
+    );
+
     submitBtn.disabled = true;
     submitBtn.textContent = "✔ ส่งแล้ว";
-    submitBtn.style.backgroundColor = "#28a745";
-    submitBtn.style.cursor = "not-allowed";
+    submitBtn.style.background = "#28a745";
 
 }
 catch(error){
 
     console.error(error);
 
-    alert("❌ ไม่สามารถเชื่อมต่อ Google Sheets ได้");
+    alert(error);
 
 }
+
 });

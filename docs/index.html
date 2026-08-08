@@ -14,65 +14,71 @@
     <section id="startPage">
         
     <!-- หน้าแรก -->
+    <header class="appHeader">
+
     <h1>🎨 ColorSense AI Classroom</h1>
 
-<p class="version">
-
-    Version 3.0
-
-</p>
-
-<p class="subtitle">
-
-    AI Innovation for Art Education
-
-</p>
-
-<div class="developerBox">
-
-    <p>
-
-        <strong>Developed by</strong>
-
+    <p class="version">
+        Version 3.5 Professional
     </p>
 
-    <p>
-
-        👨‍🏫 ครูเฉลิมพล สระ
-
+    <p class="subtitle">
+        AI Innovation for Art Education
     </p>
 
-    <p>
+    <div class="developerBox">
 
-        🏫 โรงเรียนหัวตะพานวิทยาคม
+        <p><strong>Developed by</strong></p>
 
-    </p>
+        <p>👨‍🏫 ครูเฉลิมพล สระ</p>
+
+        <p>🏫 โรงเรียนหัวตะพานวิทยาคม</p>
+
+    </div>
+    </header>
+
+        <div class="card studentCard">
+
+    <h2>👨‍🎓 ข้อมูลนักเรียน</h2>
+
+    <input
+        type="text"
+        id="studentName"
+        placeholder="ชื่อ - สกุล">
+
+    <input
+        type="number"
+        id="studentNo"
+        placeholder="เลขที่">
+
+    <input
+        type="text"
+        id="studentRoom"
+        placeholder="ห้อง เช่น ม.3/1">
+
+    <div class="statusBox">
+
+        🟢 พร้อมเริ่มกิจกรรม
+
+    </div>
+
+    <button id="startBtn">
+
+        🚀 เริ่มกิจกรรม
+
+    </button>
 
 </div>
-
-        <input
-            type="text"
-            id="studentName"
-            placeholder="ชื่อ - สกุล">
-
-        <input
-            type="number"
-            id="studentNo"
-            placeholder="เลขที่">
-
-        <input
-            type="text"
-            id="studentRoom"
-            placeholder="ห้อง เช่น ม.3/1">
-
-        <button id="startBtn">
-            เริ่มกิจกรรม
-        </button>
-
     </section>
 
     <!-- หน้ากล้อง -->
-    <section id="cameraPage" style="display:none;">
+    <!-- ===================================== -->
+<!-- Camera Page -->
+<!-- ===================================== -->
+
+<section id="cameraPage" style="display:none;">
+
+    <div class="cameraContainer">
 
         <h2>📷 วิเคราะห์สี</h2>
 
@@ -81,22 +87,29 @@
             autoplay
             playsinline>
         </video>
+
         <canvas
-    id="canvas"
-    width="320"
-    height="240"
-    style="display:none;">
-</canvas>
+            id="canvas"
+            width="320"
+            height="240"
+            style="display:none;">
+        </canvas>
+
 
 <div id="colorInfo">
 
-   <!-- ===== สีต้นแบบ ===== -->
+   <!-- ===================================== -->
+<!-- Reference Card -->
+<!-- ===================================== -->
 
-<div class="card">
+<div class="card referenceCard">
 
     <h3>🎯 สีต้นแบบ</h3>
 
-    <div id="referenceColor"></div>
+    <div
+        id="referenceColor"
+        class="colorCircle">
+    </div>
 
     <p id="referenceRGB">
 
@@ -104,12 +117,15 @@
 
     </p>
 
+    <button id="saveReference">
+
+        📌 ตั้งเป็นสีต้นแบบ
+
+    </button>
+
 </div>
 
-<hr>
-<hr>
-
-<div class="card">
+<div class="card attemptCard">
 
     <h3>🎨 การทดลอง</h3>
 
@@ -128,62 +144,95 @@
     </p>
 
 </div>
-<h3>🎯 ความเหมือนของสี</h3>
+<div class="card similarityCard">
 
-<div id="similarityValue">
-0%
-</div>
-<p id="resultText">
--
-</p>
+    <h3>🏆 ความเหมือนของสี</h3>
 
-<hr>
-    <h3>📷 สีที่กำลังสแกน</h3>
-    <div id="previewColor"></div>
+    <div id="similarityValue">
+        0%
+    </div>
 
-    <p id="liveRGB">
-
-    RGB :
-
-    <span id="rValue">0</span>
-
-    |
-
-    <span id="gValue">0</span>
-
-    |
-
-    <span id="bValue">0</span>
-
+    <p id="resultText">
+        -
     </p>
-    <button id="saveReference">
 
-    📌 ตั้งเป็นสีต้นแบบ
+</div
+><!-- ===================================== -->
+<!-- AI Coach -->
+<!-- ===================================== -->
 
-    </button>
-    <button id="recordAttempt" disabled>
+<div class="card aiCoachCard">
 
-    🎯 บันทึกผลการทดลอง
+    <div class="card aiCoachCard">
 
-    </button>
-    <button id="submitScore">
-    ✅ ส่งคะแนน
-    </button>
+    <h3>🤖 AI Coach</h3>
+
+    <div id="aiCoachMessage">
+
+        รอการทดลองครั้งที่ 1...
 
     </div>
 
-        <div id="targetCircle"></div>
-
-        <button id="backBtn">
-            ← กลับ
-        </button>
-
-    </section>
+</div>
 
 </div>
 
+    <div class="card scanCard">
+
+    <h3>📷 สีที่กำลังสแกน</h3>
+
+    <div id="previewColor" class="colorCircle"></div>
+
+    <p id="liveRGB">
+
+        RGB :
+
+        <span id="rValue">0</span>
+
+        |
+
+        <span id="gValue">0</span>
+
+        |
+
+        <span id="bValue">0</span>
+
+    </p>
+
+</div>
+    
+    <div class="card actionCard">
+
+    <h3>🎮 การควบคุม</h3>
+
+    <button id="recordAttempt" disabled>
+
+        🎯 บันทึกผลการทดลอง
+
+    </button>
+
+    <button id="submitScore">
+
+        ✅ ส่งคะแนน
+
+    </button>
+
+    <button id="backBtn">
+
+        ← กลับ
+
+    </button>
+
+</div>
+
+</div>   <!-- ปิด colorInfo -->
+</section>
+
+</div>
 <script src="assets/js/script.js"></script>
 <script src="assets/js/camera.js"></script>
+<script src="assets/js/aiCoach.js"></script>
 
 </body>
 </html>
+
