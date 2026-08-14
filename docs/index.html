@@ -70,162 +70,192 @@
 
 </div>
     </section>
-
-    <!-- หน้ากล้อง -->
-    <!-- ===================================== -->
-<!-- Camera Page -->
-<!-- ===================================== -->
+<!-- ================================
+     CAMERA PAGE
+================================ -->
 
 <section id="cameraPage" style="display:none;">
 
     <div class="cameraContainer">
 
+        <!-- =========================
+             หัวข้อ
+        ========================== -->
+
         <h2>📷 วิเคราะห์สี</h2>
 
-        <video
-            id="video"
-            autoplay
-            playsinline>
-        </video>
 
-        <canvas
-            id="canvas"
-            width="320"
-            height="240"
-            style="display:none;">
-        </canvas>
+        <!-- =========================
+             กล้อง
+        ========================== -->
+
+        <div class="cameraBox">
+
+            <video
+                id="video"
+                autoplay
+                playsinline>
+            </video>
+
+            <canvas
+                id="canvas"
+                width="320"
+                height="240"
+                style="display:none;">
+            </canvas>
+
+            <p id="cameraStatus" class="cameraStatus">
+                📷 กำลังเตรียมกล้อง...
+            </p>
+
+        </div>
 
 
-<div id="colorInfo">
+        <!-- =========================
+             สีที่กำลังสแกน
+        ========================== -->
 
-   <!-- ===================================== -->
-<!-- Reference Card -->
-<!-- ===================================== -->
+        <div class="card scanCard">
 
-<div class="card referenceCard">
+            <h3>🎨 สีที่กำลังสแกน</h3>
 
-    <h3>🎯 สีต้นแบบ</h3>
+            <div
+                id="previewColor"
+                class="colorCircle">
+            </div>
 
-    <div
-        id="referenceColor"
-        class="colorCircle">
+            <p id="liveRGB">
+
+                RGB :
+                <span id="rValue">0</span>
+                |
+                <span id="gValue">0</span>
+                |
+                <span id="bValue">0</span>
+
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             สีต้นแบบ
+        ========================== -->
+
+        <div class="card referenceCard">
+
+            <h3>🎯 สีต้นแบบ</h3>
+
+            <div
+                id="referenceColor"
+                class="colorCircle">
+            </div>
+
+            <p id="referenceRGB">
+                ยังไม่ได้ตั้งสีต้นแบบ
+            </p>
+
+            <button id="saveReference">
+                📌 ตั้งเป็นสีต้นแบบ
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             บันทึกผลการทดลอง
+             ย้ายขึ้นมาต่อจากสีต้นแบบ
+        ========================== -->
+
+        <div class="card recordCard">
+
+            <button
+                id="recordAttempt"
+                disabled>
+
+                🎯 บันทึกผลการทดลอง
+
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             การทดลอง
+        ========================== -->
+
+        <div class="card attemptCard">
+
+            <h3>🎨 การทดลอง</h3>
+
+            <div id="attemptBox">
+
+                ทดลองครั้งที่
+                <span id="attemptNo">1</span>
+                / 3
+
+            </div>
+
+            <p id="attemptStatus">
+                เหลืออีก 3 ครั้ง
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             ความเหมือนของสี
+        ========================== -->
+
+        <div class="card similarityCard">
+
+            <h3>🏆 ความเหมือนของสี</h3>
+
+            <div id="similarityValue">
+                0%
+            </div>
+
+            <p id="resultText">
+                -
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             AI Coach
+        ========================== -->
+
+        <div class="card aiCoachCard">
+
+            <h3>🤖 AI Coach</h3>
+
+            <div id="aiCoachMessage">
+                รอการทดลองครั้งที่ 1...
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             การควบคุม
+        ========================== -->
+
+        <div class="card actionCard">
+
+            <button id="submitScore">
+                ✅ ส่งคะแนน
+            </button>
+
+            <button id="backBtn">
+                ← กลับ
+            </button>
+
+        </div>
+
+
     </div>
 
-    <p id="referenceRGB">
-
-        ยังไม่ได้ตั้งสีต้นแบบ
-
-    </p>
-
-    <button id="saveReference">
-
-        📌 ตั้งเป็นสีต้นแบบ
-
-    </button>
-
-</div>
-
-<div class="card attemptCard">
-
-    <h3>🎨 การทดลอง</h3>
-
-    <div id="attemptBox">
-
-        ทดลองครั้งที่
-        <span id="attemptNo">1</span>
-        / 3
-
-    </div>
-
-    <p id="attemptStatus">
-
-        เหลืออีก 3 ครั้ง
-
-    </p>
-
-</div>
-<div class="card similarityCard">
-
-    <h3>🏆 ความเหมือนของสี</h3>
-
-    <div id="similarityValue">
-        0%
-    </div>
-
-    <p id="resultText">
-        -
-    </p>
-
-</div
-><!-- ===================================== -->
-<!-- AI Coach -->
-<!-- ===================================== -->
-
-<div class="card aiCoachCard">
-
-    <div class="card aiCoachCard">
-
-    <h3>🤖 AI Coach</h3>
-
-    <div id="aiCoachMessage">
-
-        รอการทดลองครั้งที่ 1...
-
-    </div>
-
-</div>
-
-</div>
-
-    <div class="card scanCard">
-
-    <h3>📷 สีที่กำลังสแกน</h3>
-
-    <div id="previewColor" class="colorCircle"></div>
-
-    <p id="liveRGB">
-
-        RGB :
-
-        <span id="rValue">0</span>
-
-        |
-
-        <span id="gValue">0</span>
-
-        |
-
-        <span id="bValue">0</span>
-
-    </p>
-
-</div>
-    
-    <div class="card actionCard">
-
-    <h3>🎮 การควบคุม</h3>
-
-    <button id="recordAttempt" disabled>
-
-        🎯 บันทึกผลการทดลอง
-
-    </button>
-
-    <button id="submitScore">
-
-        ✅ ส่งคะแนน
-
-    </button>
-
-    <button id="backBtn">
-
-        ← กลับ
-
-    </button>
-
-</div>
-
-</div>   <!-- ปิด colorInfo -->
 </section>
 
 </div>

@@ -129,42 +129,132 @@ let submitted = false;
 
 async function startCamera(){
 
+    console.log("📷 กำลังเปิดกล้อง...");
+
     try{
 
+        // ตรวจสอบว่า Browser รองรับกล้องหรือไม่
+        if(!navigator.mediaDevices){
+
+            throw new Error(
+                "Browser ไม่รองรับกล้อง หรือหน้าเว็บไม่ได้อยู่ใน HTTPS"
+            );
+
+        }
+
+        if(!navigator.mediaDevices.getUserMedia){
+
+            throw new Error(
+                "ไม่พบระบบ getUserMedia"
+            );
+
+        }
+
+        console.log("🔐 ขอสิทธิ์ใช้กล้อง...");
+
+        // ขอเปิดกล้องหลัง
         stream = await navigator.mediaDevices.getUserMedia({
 
             video:{
-                facingMode:"environment"
+                facingMode:{
+                    ideal:"environment"
+                },
+
+                width:{
+                    ideal:1280
+                },
+
+                height:{
+                    ideal:720
+                }
             },
 
             audio:false
 
         });
 
+        console.log("✅ ได้สิทธิ์กล้องแล้ว");
+
         video.srcObject = stream;
 
-        video.onloadedmetadata = ()=>{
+        video.setAttribute("autoplay","");
+        video.setAttribute("playsinline","");
+        video.muted = true;
 
-            console.log("✅ Camera Ready");
+        await video.play();
 
-            submitBtn.disabled = true;
-            recordBtn.disabled = true;
+        console.log("✅ Camera Ready");
 
-            scanStopped = false;
+        submitBtn.disabled = true;
+        recordBtn.disabled = true;
 
-            startColorReader();
+        scanStopped = false;
 
-            updateAttemptUI();
+        startColorReader();
 
-        };
+        updateAttemptUI();
 
     }
 
     catch(error){
 
-        console.error(error);
+        console.error(
+            "❌ CAMERA ERROR:",
+            error.name,
+            error.message,
+            error
+        );
 
-        alert("❌ ไม่สามารถเปิดกล้องได้");
+        let message =
+            "❌ ไม่สามารถเปิดกล้องได้\n\n";
+
+        if(error.name === "NotAllowedError"){
+
+            message +=
+                "📵 เบราว์เซอร์ไม่ได้รับอนุญาตให้ใช้กล้อง\n" +
+                "กรุณาอนุญาต Camera แล้วลองใหม่";
+
+        }
+
+        else if(error.name === "NotFoundError"){
+
+            message +=
+                "📷 ไม่พบกล้องของอุปกรณ์";
+
+        }
+
+        else if(error.name === "NotReadableError"){
+
+            message +=
+                "📷 กล้องกำลังถูกใช้งานโดยแอปอื่น";
+
+        }
+
+        else if(error.name === "SecurityError"){
+
+            message +=
+                "🔒 เว็บไม่ได้รับอนุญาตให้เข้าถึงกล้อง";
+
+        }
+
+        else if(error.name === "OverconstrainedError"){
+
+            message +=
+                "📷 ไม่สามารถใช้กล้องหลังตามค่าที่กำหนดได้";
+
+        }
+
+        else{
+
+            message +=
+                error.name + "\n" +
+                error.message;
+
+        }
+
+        console.error(message);
+
+        alert(message);
 
     }
 

@@ -1,536 +1,1143 @@
-body{
+/* =========================================================
+   ColorSense AI Classroom
+   Version 3.6 Professional
+   Mobile Compact UI
+   ========================================================= */
 
-    margin:0;
-    font-family:sans-serif;
-    background:#f3f5fb;
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
 }
 
-#app{
-
-    max-width:420px;
-    margin:auto;
-    padding:20px;
+html {
+    scroll-behavior: smooth;
 }
 
-h1,h2{
-
-    text-align:center;
-    color:#3056d3;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, "Noto Sans Thai", sans-serif;
+    background: #f3f5fb;
+    color: #222;
 }
 
-input{
+/* =========================================================
+   APP
+   ========================================================= */
 
-    width:100%;
-    padding:14px;
-    margin:10px 0;
-    font-size:18px;
-    border-radius:10px;
-    border:1px solid #ccc;
-    box-sizing:border-box;
+#app {
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 10px;
 }
 
-button{
+/* =========================================================
+   HEADINGS
+   ========================================================= */
 
-    width:100%;
-    padding:15px;
-    margin-top:15px;
-    font-size:18px;
-    border:none;
-    border-radius:10px;
-    background:#3056d3;
-    color:white;
-    cursor:pointer;
+h1,
+h2,
+h3 {
+    margin-top: 0;
 }
 
-video{
-
-    width:100%;
-    border-radius:15px;
-    background:black;
+h1,
+h2 {
+    text-align: center;
+    color: #3056d3;
 }
 
-#cameraPage{
-
-    position:relative;
+h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
 }
 
-#colorInfo{
+h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
 
-    margin-top:20px;
+h3 {
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 8px;
+}
 
-    background:white;
+/* =========================================================
+   HEADER
+   ========================================================= */
 
-    padding:15px;
+.appHeader {
+    text-align: center;
+    margin-bottom: 10px;
+}
 
-    border-radius:12px;
+.appHeader h1 {
+    font-size: 23px;
+    margin-bottom: 4px;
+}
 
-    text-align:center;
+.version {
+    font-size: 14px;
+    font-weight: bold;
+    color: #4a90e2;
+    margin: 2px 0;
+}
 
-    box-shadow:0 3px 10px rgba(0,0,0,.15);
+.subtitle {
+    font-size: 13px;
+    color: #777;
+    margin: 4px 0 8px;
+}
+
+.developerBox {
+    background: #f7f9fc;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 8px auto 12px;
+    max-width: 320px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.developerBox p {
+    margin: 3px 0;
+    font-size: 13px;
+}
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 11px;
+    margin: 8px auto;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+}
+
+/* ไม่ให้ hover ทำให้มือถือขยับ */
+.card:hover {
+    transform: none;
+}
+
+/* =========================================================
+   STUDENT CARD
+   ========================================================= */
+
+.studentCard {
+    max-width: 420px;
+    margin: 8px auto;
+}
+
+.studentCard h2 {
+    margin-bottom: 10px;
+}
+
+.studentCard input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 7px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.statusBox {
+    background: #e8f5e9;
+    color: #2e7d32;
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+#startBtn {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 9px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #3056d3;
+    color: white;
+}
+
+/* =========================================================
+   CAMERA PAGE
+   ========================================================= */
+
+#cameraPage {
+    position: relative;
+    width: 100%;
+}
+
+/* =========================================================
+   CAMERA
+   ========================================================= */
+
+.cameraContainer {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* หัวข้อวิเคราะห์สี */
+.cameraContainer > h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+/* กล้องให้สั้นลง */
+video {
+    display: block;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 14px;
+    background: #000;
+}
+
+/* =========================================================
+   SCAN COLOR
+   ========================================================= */
+
+/*
+   สีที่กำลังสแกน
+   ใช้พื้นที่น้อยลง แต่ยังเห็นสีและ RGB ชัด
+*/
+
+.scanCard {
+    padding: 10px;
+    margin: 7px auto;
+}
+
+.scanCard h3 {
+    margin-bottom: 6px;
+}
+
+#previewColor {
+    width: 58px;
+    height: 58px;
+    margin: 3px auto 5px;
+    border-radius: 50%;
+    border: 3px solid #444;
+    background: #000;
+}
+
+#liveRGB {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    margin: 4px 0 2px;
+    color: #333;
+}
+
+/* =========================================================
+   REFERENCE COLOR
+   ========================================================= */
+
+.referenceCard {
+    padding: 10px;
+    margin: 7px auto;
+}
+
+.referenceCard h3 {
+    margin-bottom: 6px;
+}
+
+.colorCircle {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    margin: 3px auto 7px;
+    border: 3px solid #444;
+}
+
+#referenceColor {
+    width: 65px;
+    height: 65px;
+    margin: 3px auto 7px;
+    border-radius: 50%;
+    background: #ddd;
+    border: 3px solid #444;
+}
+
+#referenceRGB {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin: 4px 0 7px;
+}
+
+/* =========================================================
+   SAVE REFERENCE
+   ========================================================= */
+
+#saveReference {
+    width: 100%;
+    height: 40px;
+    padding: 7px;
+    border: none;
+    border-radius: 8px;
+    background: #4a90e2;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#saveReference:hover {
+    background: #357bd8;
+}
+
+/* =========================================================
+   ATTEMPT
+   ========================================================= */
+
+#attemptBox {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 4px 0;
+}
+
+#attemptStatus {
+    text-align: center;
+    font-size: 14px;
+    margin: 4px 0;
+    color: #666;
+}
+
+/* =========================================================
+   SIMILARITY
+   ========================================================= */
+
+#similarityValue {
+    font-size: 38px;
+    font-weight: bold;
+    text-align: center;
+    color: #1976d2;
+    margin: 5px 0;
+}
+
+#resultText {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 3px 0;
+}
+
+/* =========================================================
+   AI COACH
+   ========================================================= */
+
+.aiCoachCard {
+    border-left: 4px solid #4caf50;
+    padding: 10px;
+    margin: 8px auto;
+}
+
+.aiCoachCard h3 {
+    margin-bottom: 6px;
+}
+
+#aiCoachMessage {
+    background: #f1fff3;
+    border: 1px solid #b7e4c7;
+    border-radius: 9px;
+    padding: 10px;
+    color: #2e7d32;
+    font-size: 14px;
+    line-height: 1.45;
+    text-align: left;
+    white-space: pre-line;
+    min-height: 45px;
+}
+
+/* =========================================================
+   ACTION CARD
+   ========================================================= */
+
+.actionCard {
+    padding: 10px;
+    margin: 8px auto 15px;
+}
+
+.actionCard h3 {
+    margin-bottom: 5px;
+}
+
+.actionCard button {
+    width: 100%;
+    margin-top: 7px;
+}
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 7px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background: #3056d3;
+    color: white;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   RECORD BUTTON
+   ========================================================= */
+
+#recordAttempt {
+    background: #3056d3;
+    font-weight: bold;
+}
+
+#recordAttempt.finished {
+    background: #dc3545;
+    color: white;
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+#submitScore {
+    width: 100%;
+    margin-top: 7px;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#submitScore:hover {
+    background: #218838;
+}
+
+/* =========================================================
+   COLOR INFO
+   ========================================================= */
+
+#colorInfo {
+    margin-top: 8px;
+    background: white;
+    padding: 10px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================================
+   MOBILE COMPACT
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    #app {
+        max-width: 430px;
+        padding: 7px;
+    }
+
+    .appHeader {
+        margin-bottom: 7px;
+    }
+
+    .appHeader h1 {
+        font-size: 21px;
+    }
+
+    .card {
+        padding: 9px;
+        margin: 6px auto;
+        border-radius: 12px;
+    }
+
+    video {
+        height: 280px;
+        border-radius: 12px;
+    }
+
+    .cameraContainer > h2 {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    .scanCard,
+    .referenceCard,
+    .aiCoachCard,
+    .actionCard {
+        margin: 6px auto;
+    }
+
+    #previewColor {
+        width: 52px;
+        height: 52px;
+    }
+
+    #referenceColor {
+        width: 58px;
+        height: 58px;
+    }
+
+    #similarityValue {
+        font-size: 36px;
+    }
+
+    #resultText {
+        font-size: 19px;
+    }
+
+    #aiCoachMessage {
+        font-size: 13px;
+        padding: 9px;
+        line-height: 1.4;
+    }
+
+    button {
+        padding: 9px;
+        font-size: 15px;
+    }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    #app {
+        padding: 5px;
+    }
+
+    video {
+        height: 245px;
+    }
+
+    .card {
+        padding: 8px;
+        margin: 5px auto;
+    }
+
+    h3 {
+        font-size: 15px;
+    }
+
+    #previewColor {
+        width: 48px;
+        height: 48px;
+    }
+
+    #referenceColor {
+        width: 52px;
+        height: 52px;
+    }
+
+    #similarityValue {
+        font-size: 32px;
+    }
+
+    #resultText {
+        font-size: 17px;
+    }
+}
+
+/* =========================================================
+   END VERSION 3.6
+   ========================================================= */
+   /* =========================================================
+   ColorSense AI 3.5 Professional
+   STEP 2 — Compact Responsive Camera Layout
+   ========================================================= */
+
+
+/* =========================================================
+   CAMERA PAGE
+   ========================================================= */
+
+#cameraPage {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CAMERA CONTAINER
+   ========================================================= */
+
+.cameraContainer {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CAMERA BOX
+   ========================================================= */
+
+.cameraBox {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto 10px;
+}
+
+
+/* =========================================================
+   CAMERA — ลดขนาดลง
+   ========================================================= */
+
+.cameraBox video,
+#video {
+
+    display: block;
+
+    width: 50%;
+
+    max-width: 260px;
+
+    height: auto;
+
+    aspect-ratio: 4 / 3;
+
+    object-fit: cover;
+
+    margin: 0 auto;
+
+    border-radius: 12px;
+
+    background: #000;
 
 }
 
-#previewColor{
 
-    width:90px;
+/* =========================================================
+   CAMERA STATUS
+   ========================================================= */
 
-    height:90px;
+.cameraStatus {
 
-    margin:auto;
+    margin: 5px 0 8px;
 
-    border-radius:50%;
+    text-align: center;
 
-    border:3px solid #444;
+    font-size: 13px;
 
-    background:black;
+    color: #666;
 
-    margin-bottom:15px;
-
-}
-#referenceColor{
-
-width:90px;
-
-height:90px;
-
-margin:auto;
-
-border-radius:50%;
-
-background:#ddd;
-
-border:3px solid #444;
-
-margin-bottom:10px;
+    line-height: 1.3;
 
 }
 
-#saveReference{
 
-margin-top:10px;
+/* =========================================================
+   CARD — ลดพื้นที่โดยรวม
+   ========================================================= */
 
-padding:12px 20px;
+.cameraContainer .card {
 
-border:none;
+    padding: 12px 15px;
 
-border-radius:10px;
+    margin: 10px auto;
 
-background:#28a745;
-
-color:white;
-
-font-size:16px;
-
-cursor:pointer;
+    border-radius: 14px;
 
 }
 
-#saveReference:hover{
 
-background:#218838;
+/* =========================================================
+   CARD TITLE
+   ========================================================= */
 
-}
-/* ===============================
-   Similarity
-=============================== */
+.cameraContainer .card h3 {
 
-#similarityValue{
+    margin-top: 0;
 
-    font-size:42px;
-    font-weight:bold;
-    text-align:center;
-    color:#1976d2;
-    margin:15px 0;
+    margin-bottom: 8px;
 
-}
-/* ===============================
-   Result Text
-=============================== */
+    font-size: 17px;
 
-#resultText{
-
-    text-align:center;
-    font-size:28px;
-    font-weight:bold;
-    margin-top:10px;
-
-}
-/* ===============================
-   Submit Score Button
-=============================== */
-
-#submitScore{
-
-    width:100%;
-    margin-top:10px;
-    padding:15px;
-
-    background:#1976d2;
-    color:white;
-
-    border:none;
-    border-radius:10px;
-
-    font-size:18px;
-    font-weight:bold;
-
-    cursor:pointer;
+    text-align: center;
 
 }
 
-#submitScore:hover{
 
-    background:#1565c0;
+/* =========================================================
+   COLOR CIRCLE
+   ========================================================= */
 
-}
-/* ===== Version 3 : RGB แบบบรรทัดเดียว ===== */
+.cameraContainer .colorCircle {
 
-#liveRGB{
+    width: 70px;
 
-    font-size:18px;
+    height: 70px;
 
-    font-weight:bold;
+    margin: 5px auto 8px;
 
-    text-align:center;
+    border-radius: 50%;
 
-    margin-top:10px;
+    border: 3px solid #444;
 
-    margin-bottom:15px;
-
-    color:#333;
-
-}
-/* ===== Version 3 Header ===== */
-
-.version{
-
-    font-size:16px;
-
-    font-weight:bold;
-
-    color:#4A90E2;
-
-    margin-top:-5px;
+    box-sizing: border-box;
 
 }
 
-.subtitle{
 
-    font-size:15px;
+/* =========================================================
+   สีที่กำลังสแกน — RGB บรรทัดเดียว
+   ========================================================= */
 
-    color:#666;
+#liveRGB {
 
-    margin-bottom:18px;
+    display: block;
 
-}
+    width: 100%;
 
-.developerBox{
+    margin: 5px auto 0;
 
-    background:#f7f9fc;
+    text-align: center;
 
-    border-radius:14px;
+    white-space: nowrap;
 
-    padding:14px;
+    font-size: 15px;
 
-    margin:15px auto 25px;
+    font-weight: bold;
 
-    max-width:320px;
+    color: #333;
 
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
-
-}
-
-.developerBox p{
-
-    margin:5px 0;
-
-}
-/* =======================================
-   Version 3
-   Reference Card
-======================================= */
-
-.card{
-
-    background:#ffffff;
-
-    border-radius:18px;
-
-    padding:18px;
-
-    margin:18px auto;
-
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    line-height: 1.3;
 
 }
 
-.referenceCard h3{
 
-    text-align:center;
+/* =========================================================
+   สีต้นแบบ — RGB บรรทัดเดียว
+   ========================================================= */
 
-    margin-bottom:18px;
+#referenceRGB {
 
-}
+    display: block;
 
-.colorCircle{
+    width: 100%;
 
-    width:110px;
+    margin: 5px auto 10px;
 
-    height:110px;
+    text-align: center;
 
-    border-radius:50%;
+    white-space: nowrap;
 
-    margin:0 auto 15px;
+    font-size: 15px;
 
-    border:4px solid #e6e6e6;
+    font-weight: bold;
 
-}
+    color: #555;
 
-#referenceRGB{
-
-    text-align:center;
-
-    font-size:15px;
-
-    color:#555;
-
-    margin-bottom:18px;
+    line-height: 1.3;
 
 }
 
-#saveReference{
 
-    width:100%;
+/* =========================================================
+   ปุ่มตั้งสีต้นแบบ
+   ========================================================= */
 
-    height:48px;
+#saveReference {
 
-    border:none;
+    width: 100%;
 
-    border-radius:12px;
+    height: 42px;
 
-    background:#4A90E2;
+    margin: 5px 0 0;
 
-    color:white;
+    padding: 8px 12px;
 
-    font-size:16px;
+    border: none;
 
-    font-weight:bold;
+    border-radius: 10px;
 
-    cursor:pointer;
+    background: #4A90E2;
 
-}
+    color: white;
 
-#saveReference:hover{
+    font-size: 15px;
 
-    background:#357BD8;
+    font-weight: bold;
 
-}
-/* ===== Record Button Complete ===== */
-
-#recordAttempt.finished{
-
-    background:#dc3545;
-
-    color:white;
-
-    cursor:not-allowed;
-
-    opacity:1;
-
-}
-/* ======================================
-   ColorSense AI Version 3.5
-   Professional Card System
-====================================== */
-
-.appHeader{
-
-    text-align:center;
-
-    margin-bottom:25px;
+    cursor: pointer;
 
 }
 
-.appHeader h1{
 
-    font-size:2rem;
+/* =========================================================
+   RECORD CARD
+   ========================================================= */
 
-    margin-bottom:10px;
+.recordCard {
 
-}
-
-.version{
-
-    font-size:1rem;
-
-    color:#666;
-
-    margin-bottom:8px;
+    padding: 8px 15px !important;
 
 }
 
-.subtitle{
 
-    color:#888;
+/* =========================================================
+   ปุ่มบันทึกผลการทดลอง
+   ========================================================= */
 
-    margin-bottom:15px;
+#recordAttempt {
 
-}
+    width: 100%;
 
-.developerBox{
+    height: 44px;
 
-    background:#f5f7fb;
+    margin: 0;
 
-    border-radius:14px;
+    padding: 8px 12px;
 
-    padding:12px;
+    border: none;
 
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    border-radius: 10px;
 
-}
+    font-size: 16px;
 
-.card{
-
-    background:#fff;
-
-    border-radius:18px;
-
-    padding:18px;
-
-    margin:18px auto;
-
-    box-shadow:0 6px 18px rgba(0,0,0,.08);
-
-    transition:.25s;
+    font-weight: bold;
 
 }
 
-.card:hover{
 
-    transform:translateY(-2px);
+/* =========================================================
+   สถานะปุ่มบันทึกเมื่อกดแล้ว
+   ========================================================= */
 
-    box-shadow:0 10px 24px rgba(0,0,0,.12);
+#recordAttempt.finished {
 
-}
+    background: #dc3545;
 
-.card h3{
+    color: white;
 
-    margin-top:0;
-
-    text-align:center;
-
-}
-
-.actionCard button{
-
-    width:100%;
-
-    margin-top:12px;
-
-}
-/* ======================================
-   Student Information Card
-====================================== */
-
-.studentCard{
-
-    max-width:420px;
-
-    margin:auto;
+    opacity: 1;
 
 }
 
-.studentCard h2{
 
-    text-align:center;
+/* =========================================================
+   ATTEMPT CARD
+   ========================================================= */
 
-    margin-bottom:20px;
+.attemptCard {
 
-}
-
-.studentCard input{
-
-    width:100%;
-
-    padding:12px;
-
-    margin-bottom:12px;
-
-    border:1px solid #ddd;
-
-    border-radius:10px;
-
-    font-size:16px;
-
-    box-sizing:border-box;
+    text-align: center;
 
 }
 
-.statusBox{
 
-    background:#e8f5e9;
+/* =========================================================
+   ATTEMPT BOX
+   ========================================================= */
 
-    color:#2e7d32;
+#attemptBox {
 
-    text-align:center;
+    font-size: 16px;
 
-    padding:12px;
+    font-weight: bold;
 
-    border-radius:10px;
-
-    font-weight:bold;
-
-    margin:15px 0;
+    line-height: 1.4;
 
 }
 
-#startBtn{
 
-    width:100%;
+/* =========================================================
+   ATTEMPT STATUS
+   ========================================================= */
 
-    padding:14px;
+#attemptStatus {
 
-    border:none;
+    margin: 5px 0 0;
 
-    border-radius:12px;
+    font-size: 14px;
 
-    font-size:18px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-}
-/* ======================================
-   AI Coach Card
-====================================== */
-
-.aiCoachCard{
-
-    border-left:6px solid #4caf50;
+    color: #666;
 
 }
 
-#aiCoachMessage{
 
-    background:#f1fff3;
+/* =========================================================
+   SIMILARITY
+   ========================================================= */
 
-    border:1px solid #b7e4c7;
+.similarityCard {
 
-    border-radius:12px;
+    text-align: center;
 
-    padding:16px;
+}
 
-    color:#2e7d32;
 
-    font-size:16px;
+#similarityValue {
 
-    line-height:1.6;
+    font-size: 34px;
 
-    text-align:left;
+    font-weight: bold;
 
-    white-space:pre-line;
+    text-align: center;
 
-    min-height:70px;
+    color: #1976d2;
 
+    margin: 5px 0;
+
+    line-height: 1.1;
+
+}
+
+
+#resultText {
+
+    text-align: center;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+    margin: 5px 0;
+
+}
+
+
+/* =========================================================
+   AI COACH
+   ========================================================= */
+
+.aiCoachCard {
+
+    border-left: 5px solid #4caf50;
+
+}
+
+
+#aiCoachMessage {
+
+    background: #f1fff3;
+
+    border: 1px solid #b7e4c7;
+
+    border-radius: 10px;
+
+    padding: 10px 12px;
+
+    color: #2e7d32;
+
+    font-size: 14px;
+
+    line-height: 1.45;
+
+    text-align: left;
+
+    white-space: pre-line;
+
+    min-height: 45px;
+
+}
+
+
+/* =========================================================
+   ACTION CARD
+   ========================================================= */
+
+.actionCard {
+
+    padding: 8px 15px !important;
+
+}
+
+
+/* =========================================================
+   ปุ่มส่งคะแนน / กลับ
+   ========================================================= */
+
+.actionCard button {
+
+    width: 100%;
+
+    height: 42px;
+
+    margin-top: 7px;
+
+    padding: 8px 12px;
+
+    font-size: 16px;
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    #cameraPage {
+
+        padding-left: 8px;
+
+        padding-right: 8px;
+
+    }
+
+
+    .cameraContainer {
+
+        max-width: 100%;
+
+    }
+
+
+    .cameraBox video,
+    #video {
+
+        width: 50%;
+
+        max-width: 220px;
+
+    }
+
+
+    .cameraContainer .card {
+
+        margin: 8px auto;
+
+        padding: 10px 12px;
+
+        border-radius: 12px;
+
+    }
+
+
+    .cameraContainer .card h3 {
+
+        font-size: 16px;
+
+        margin-bottom: 6px;
+
+    }
+
+
+    .cameraContainer .colorCircle {
+
+        width: 62px;
+
+        height: 62px;
+
+    }
+
+
+    #liveRGB,
+    #referenceRGB {
+
+        font-size: 14px;
+
+    }
+
+
+    #saveReference,
+    #recordAttempt,
+    .actionCard button {
+
+        height: 40px;
+
+        font-size: 15px;
+
+    }
+
+
+    #similarityValue {
+
+        font-size: 32px;
+
+    }
+
+
+    #resultText {
+
+        font-size: 18px;
+
+    }
+
+
+    #aiCoachMessage {
+
+        font-size: 14px;
+
+        padding: 9px 10px;
+
+    }
+
+}
+
+
+/* =========================================================
+   NOTEBOOK / DESKTOP
+   ========================================================= */
+
+@media (min-width: 601px) {
+
+    .cameraContainer {
+
+        max-width: 420px;
+
+    }
+
+
+    .cameraBox video,
+    #video {
+
+        width: 50%;
+
+        max-width: 260px;
+
+    }
+
+}
+/* ==========================================
+   FIX — Reference RGB One Line
+========================================== */
+
+#referenceRGB {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    white-space: nowrap !important;
+
+    text-align: center;
+
+    font-size: 15px;
+
+    line-height: 1.2;
+
+    margin: 5px auto 10px;
+
+    overflow: visible !important;
 }
