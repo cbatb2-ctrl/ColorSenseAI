@@ -1141,3 +1141,8 @@ button:disabled {
 
     overflow: visible !important;
 }
+.developer-name {
+    margin: 6px 0 0;
+    font-size: 14px;
+    opacity: 0.85;
+}
