@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ColorSense AI — Teaching Dashboard</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            background: #f4f7fb;
+
+            color: #263238;
+        }
+
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1565c0,
+                    #42a5f5
+                );
+
+            color: white;
+
+            padding: 28px 35px;
+        }
+
+
+        header h1 {
+
+            margin: 0;
+
+            font-size: 30px;
+        }
+
+
+        header p {
+
+            margin: 8px 0 0;
+
+            opacity: 0.92;
+        }
+
+
+        /* ==============================
+           CONTAINER
+        ============================== */
+
+        .container {
+
+            max-width: 1450px;
+
+            margin: auto;
+
+            padding: 25px;
+        }
+
+
+        /* ==============================
+           STAT CARDS
+        ============================== */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .card {
+
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.07);
+        }
+
+
+        .stat-title {
+
+            font-size: 15px;
+
+            color: #78909c;
+        }
+
+
+        .stat-value {
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            margin-top: 8px;
+        }
+
+
+        /* ==============================
+           LIVE STATUS
+        ============================== */
+
+        .live-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .live-card {
+
+            border-radius: 14px;
+
+            padding: 17px;
+
+            background: white;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0, 0, 0, 0.06);
+        }
+
+
+        .live-number {
+
+            font-size: 27px;
+
+            font-weight: bold;
+
+            margin-top: 5px;
+        }
+
+
+        .live-green {
+
+            border-left: 6px solid #43a047;
+        }
+
+
+        .live-yellow {
+
+            border-left: 6px solid #fbc02d;
+        }
+
+
+        .live-blue {
+
+            border-left: 6px solid #1e88e5;
+        }
+
+
+        .live-red {
+
+            border-left: 6px solid #e53935;
+        }
+
+
+        /* ==============================
+           MAIN GRID
+        ============================== */
+
+        .main-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1.5fr 1fr;
+
+            gap: 20px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .card h2 {
+
+            margin-top: 0;
+
+            font-size: 21px;
+        }
+
+
+        /* ==============================
+           STUDENT PROGRESS
+        ============================== */
+
+        .student {
+
+            margin-bottom: 20px;
+
+            padding-bottom: 16px;
+
+            border-bottom:
+                1px solid #eeeeee;
+        }
+
+
+        .student:last-child {
+
+            border-bottom: none;
+
+            margin-bottom: 0;
+        }
+
+
+        .student-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 7px;
+        }
+
+
+        .student-name {
+
+            font-weight: 600;
+        }
+
+
+        .student-best {
+
+            color: #1565c0;
+
+            font-weight: bold;
+        }
+
+
+        .attempts {
+
+            display: flex;
+
+            gap: 8px;
+
+            margin-top: 8px;
+        }
+
+
+        .attempt {
+
+            font-size: 12px;
+
+            color: #607d8b;
+
+            background: #f5f7f9;
+
+            padding:
+                5px 9px;
+
+            border-radius: 8px;
+        }
+
+
+        .improvement {
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            color: #2e7d32;
+
+            margin-left: auto;
+
+            padding: 5px 9px;
+
+            background: #e8f5e9;
+
+            border-radius: 8px;
+        }
+
+
+        .progress {
+
+            height: 12px;
+
+            background: #e0e0e0;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #42a5f5,
+                    #1e88e5
+                );
+        }
+
+
+        /* ==============================
+           COLORS
+        ============================== */
+
+        .color-list {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 12px;
+        }
+
+
+        .color-item {
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            font-weight: bold;
+        }
+
+
+        .green {
+
+            background: #c8e6c9;
+
+            color: #1b5e20;
+        }
+
+
+        .yellow {
+
+            background: #fff9c4;
+
+            color: #795548;
+        }
+
+
+        .purple {
+
+            background: #e1bee7;
+
+            color: #4a148c;
+        }
+
+
+        .orange {
+
+            background: #ffe0b2;
+
+            color: #e65100;
+        }
+
+
+        /* ==============================
+           TEACHER INSIGHT
+        ============================== */
+
+        .notice {
+
+            margin-top: 20px;
+
+            background: #fff8e1;
+
+            border-left:
+                5px solid #ffb300;
+
+            padding: 16px;
+
+            border-radius: 10px;
+        }
+
+
+        .notice-title {
+
+            font-weight: bold;
+
+            margin-bottom: 5px;
+        }
+
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        .footer {
+
+            text-align: center;
+
+            color: #90a4ae;
+
+            padding: 25px;
+        }
+
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 1000px) {
+
+            .stats,
+            .live-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .main-grid {
+
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 550px) {
+
+            .stats,
+            .live-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .color-list {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            header {
+
+                padding: 22px;
+            }
+
+
+            header h1 {
+
+                font-size: 24px;
+            }
+
+
+            .container {
+
+                padding: 15px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header>
+
+    <h1>
+        🎨 ColorSense AI Classroom
+    </h1>
+
+    <p>
+        Live Teaching Dashboard —
+        ระบบติดตามการเรียนรู้การผสมสี
+    </p>
+
+    <p class="developer-name">
+        ผู้พัฒนาและออกแบบระบบ: [นายเฉลิมพล สระ ตำแหน่ง ครู]
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- ==========================================
+         CLASS OVERVIEW
+    =========================================== -->
+
+    <section class="stats">
+
+
+        <div class="card">
+
+            <div class="stat-title">
+                👩‍🎨 นักเรียนที่เข้าร่วม
+            </div>
+
+            <div class="stat-value">
+                32
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="stat-title">
+                🧪 การทดลองทั้งหมด
+            </div>
+
+            <div class="stat-value">
+                78
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="stat-title">
+                📊 คะแนนเฉลี่ยล่าสุด
+            </div>
+
+            <div class="stat-value">
+                87.42%
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="stat-title">
+                📈 พัฒนาการเฉลี่ย
+            </div>
+
+            <div class="stat-value">
+                +12.8%
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ==========================================
+         LIVE LEARNING STATUS
+    =========================================== -->
+
+    <section class="live-grid">
+
+
+        <div class="live-card live-green">
+
+            <div>
+                🟢 กำลังทดลอง
+            </div>
+
+            <div class="live-number">
+                14 คน
+            </div>
+
+        </div>
+
+
+        <div class="live-card live-yellow">
+
+            <div>
+                🟡 ส่งผลแล้ว
+            </div>
+
+            <div class="live-number">
+                11 คน
+            </div>
+
+        </div>
+
+
+        <div class="live-card live-blue">
+
+            <div>
+                🔵 กำลังปรับสี
+            </div>
+
+            <div class="live-number">
+                5 คน
+            </div>
+
+        </div>
+
+
+        <div class="live-card live-red">
+
+            <div>
+                🔴 ควรได้รับคำแนะนำ
+            </div>
+
+            <div class="live-number">
+                2 คน
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ==========================================
+         MAIN CONTENT
+    =========================================== -->
+
+    <section class="main-grid">
+
+
+        <!-- ======================================
+             STUDENT DEVELOPMENT
+        ======================================= -->
+
+        <div class="card">
+
+            <h2>
+                📈 พัฒนาการรายบุคคล
+            </h2>
+
+
+            <!-- STUDENT A -->
+
+            <div class="student">
+
+                <div class="student-header">
+
+                    <span class="student-name">
+                        นักเรียน A
+                    </span>
+
+                    <span class="student-best">
+                        Best 94%
+                    </span>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar"
+                        style="width:94%"
+                    ></div>
+
+                </div>
+
+
+                <div class="attempts">
+
+                    <span class="attempt">
+                        ครั้งที่ 1: 72%
+                    </span>
+
+                    <span class="attempt">
+                        ครั้งที่ 2: 84%
+                    </span>
+
+                    <span class="attempt">
+                        ครั้งที่ 3: 94%
+                    </span>
+
+                    <span class="improvement">
+                        +22 จุด
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT B -->
+
+            <div class="student">
+
+                <div class="student-header">
+
+                    <span class="student-name">
+                        นักเรียน B
+                    </span>
+
+                    <span class="student-best">
+                        Best 88%
+                    </span>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar"
+                        style="width:88%"
+                    ></div>
+
+                </div>
+
+
+                <div class="attempts">
+
+                    <span class="attempt">
+                        ครั้งที่ 1: 76%
+                    </span>
+
+                    <span class="attempt">
+                        ครั้งที่ 2: 82%
+                    </span>
+
+                    <span class="attempt">
+                        ครั้งที่ 3: 88%
+                    </span>
+
+                    <span class="improvement">
+                        +12 จุด
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT C -->
+
+            <div class="student">
+
+                <div class="student-header">
+
+                    <span class="student-name">
+                        นักเรียน C
+                    </span>
+
+                    <span class="student-best">
+                        Best 82%
+                    </span>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar"
+                        style="width:82%"
+                    ></div>
+
+                </div>
+
+
+                <div class="attempts">
+
+                    <span class="attempt">
+                        ครั้งที่ 1: 61%
+                    </span>
+
+                    <span class="attempt">
+                        ครั้งที่ 2: 74%
+                    </span>
+
+                    <span class="attempt">
+                        ครั้งที่ 3: 82%
+                    </span>
+
+                    <span class="improvement">
+                        +21 จุด
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT D -->
+
+            <div class="student">
+
+                <div class="student-header">
+
+                    <span class="student-name">
+                        นักเรียน D
+                    </span>
+
+                    <span class="student-best">
+                        Best 76%
+                    </span>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar"
+                        style="width:76%"
+                    ></div>
+
+                </div>
+
+
+                <div class="attempts">
+
+                    <span class="attempt">
+                        ครั้งที่ 1: 68%
+                    </span>
+
+                    <span class="attempt">
+                        ครั้งที่ 2: 71%
+                    </span>
+
+                    <span class="attempt">
+                        ครั้งที่ 3: 76%
+                    </span>
+
+                    <span class="improvement">
+                        +8 จุด
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ======================================
+             COLORS + TEACHER INSIGHT
+        ======================================= -->
+
+        <div class="card">
+
+            <h2>
+                🎨 สีที่กำลังฝึก
+            </h2>
+
+
+            <div class="color-list">
+
+
+                <div class="color-item green">
+
+                    🟢 เขียว
+
+                    <br>
+
+                    <small>
+                        12 คน
+                    </small>
+
+                </div>
+
+
+                <div class="color-item yellow">
+
+                    🟡 เหลือง
+
+                    <br>
+
+                    <small>
+                        8 คน
+                    </small>
+
+                </div>
+
+
+                <div class="color-item purple">
+
+                    🟣 ม่วง
+
+                    <br>
+
+                    <small>
+                        7 คน
+                    </small>
+
+                </div>
+
+
+                <div class="color-item orange">
+
+                    🟠 ส้ม
+
+                    <br>
+
+                    <small>
+                        5 คน
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="notice">
+
+                <div class="notice-title">
+                    💡 Teacher Insight
+                </div>
+
+                นักเรียนส่วนใหญ่กำลังพัฒนา
+                ความแม่นยำของการผสมสี
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+<div class="footer">
+
+    ColorSense AI Classroom ·
+    Dashboard Development
+
+</div>
+
+
+</body>
+
+</html>
