@@ -277,3 +277,55 @@ function getAverageDevelopment() {
     );
 
 }
+
+function renderStudentProgress() {
+    const container = document.getElementById("studentProgressList");
+
+    if (!container) {
+        console.error("ไม่พบ studentProgressList");
+        return;
+    }
+
+    container.innerHTML = dashboardStudents.map(student => {
+        const attempts = student.attempts;
+        const best = getBestScore(student);
+        const development = getDevelopment(student);
+
+        const attemptHTML = attempts.map((score, index) => `
+            <span class="attempt">
+                ครั้งที่ ${index + 1}: ${score}%
+            </span>
+        `).join("");
+
+        return `
+            <div class="student">
+                <div class="student-header">
+                    <span class="student-name">
+                        ${student.name}
+                    </span>
+
+                    <span class="student-best">
+                        Best ${best}%
+                    </span>
+                </div>
+
+                <div class="progress">
+                    <div
+                        class="progress-bar"
+                        style="width:${best}%"
+                    ></div>
+                </div>
+
+                <div class="attempts">
+                    ${attemptHTML}
+
+                    <span class="improvement">
+                       ${development >= 0 ? "+" : ""}${development} จุด
+                    </span>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+document.addEventListener("DOMContentLoaded", renderStudentProgress);
