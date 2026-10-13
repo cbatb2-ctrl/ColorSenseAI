@@ -329,3 +329,119 @@ function renderStudentProgress() {
 }
 
 document.addEventListener("DOMContentLoaded", renderStudentProgress);
+function renderAttemptAverageChart() {
+    const container = document.getElementById("attemptAverageChart");
+
+    if (!container) {
+        console.error("ไม่พบ attemptAverageChart");
+        return;
+    }
+
+    if (!dashboardStudents.length) {
+        container.textContent = "ยังไม่มีข้อมูลคะแนน";
+        return;
+    }
+
+    const attemptCount = Math.max(
+        ...dashboardStudents.map(student => student.attempts.length)
+    );
+
+    const averages = Array.from({ length: attemptCount }, (_, index) => {
+        const scores = dashboardStudents
+            .map(student => student.attempts[index])
+            .filter(score => Number.isFinite(score));
+
+        return {
+            label: `ครั้งที่ ${index + 1}`,
+            average: scores.length
+                ? scores.reduce((sum, score) => sum + score, 0) / scores.length
+                : 0
+        };
+    });
+
+    const width = 680;
+    const height = 300;
+    const padding = { top: 25, right: 25, bottom: 55, left: 55 };
+    const plotWidth = width - padding.left - padding.right;
+    const plotHeight = height - padding.top - padding.bottom;
+    const maxScore = 100;
+    const slotWidth = plotWidth / averages.length;
+    const barWidth = Math.min(100, slotWidth * 0.5);
+
+    const gridLines = [0, 20, 40, 60, 80, 100].map(score => {
+        const y = padding.top + plotHeight * (1 - score / maxScore);
+
+        return `
+            <line
+                x1="${padding.left}"
+                y1="${y}"
+                x2="${width - padding.right}"
+                y2="${y}"
+                stroke="#e3eaf2"
+                stroke-width="1"
+            />
+            <text
+                x="${padding.left - 10}"
+                y="${y + 4}"
+                text-anchor="end"
+                font-size="12"
+                fill="#607d8b"
+            >${score}</text>
+        `;
+    }).join("");
+
+    const bars = averages.map((item, index) => {
+        const barHeight = plotHeight * item.average / maxScore;
+        const x = padding.left + slotWidth * index + (slotWidth - barWidth) / 2;
+        const y = padding.top + plotHeight - barHeight;
+
+        return `
+            <rect
+                x="${x}"
+                y="${y}"
+                width="${barWidth}"
+                height="${barHeight}"
+                rx="7"
+                fill="#42a5f5"
+            />
+            <text
+                x="${x + barWidth / 2}"
+                y="${y - 9}"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="600"
+                fill="#263238"
+            >${item.average.toFixed(2)}%</text>
+            <text
+                x="${x + barWidth / 2}"
+                y="${height - 22}"
+                text-anchor="middle"
+                font-size="13"
+                fill="#455a64"
+            >${item.label}</text>
+        `;
+    }).join("");
+
+    const first = averages[0].average;
+    const last = averages[averages.length - 1].average;
+    const difference = last - first;
+    const sign = difference > 0 ? "+" : "";
+
+    container.innerHTML = `
+        <svg
+            viewBox="0 0 ${width} ${height}"
+            role="img"
+            aria-label="กราฟคะแนนเฉลี่ยการทดลองผสมสี"
+        >
+            ${gridLines}
+            ${bars}
+        </svg>
+
+        <div class="chart-summary">
+            คะแนนเฉลี่ยเปลี่ยนแปลงจากครั้งแรกถึงครั้งล่าสุด
+            <strong>${sign}${difference.toFixed(2)} จุด</strong>
+        </div>
+    `;
+}
+
+document.addEventListener("DOMContentLoaded", renderAttemptAverageChart);
