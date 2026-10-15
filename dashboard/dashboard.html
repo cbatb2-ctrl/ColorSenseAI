@@ -495,6 +495,135 @@
                 padding: 15px;
             }
         }
+/* ==========================================
+   CLASS PROGRESS CHART
+========================================== */
+
+.chart-card {
+    margin-bottom: 24px;
+}
+
+.chart-description {
+    color: #607d8b;
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
+
+.chart-container {
+    width: 100%;
+    min-height: 280px;
+    overflow-x: auto;
+}
+
+.chart-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.chart-note {
+    margin-top: 14px;
+    font-size: 13px;
+    color: #78909c;
+}
+
+.chart-bar {
+    transition: height 0.25s ease;
+}
+
+@media (max-width: 550px) {
+    .chart-container {
+        min-height: 240px;
+    }
+}
+
+/* D3.5 — Student Search and Detail */
+
+.student-search {
+    margin: 16px 0;
+}
+
+.student-search input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d8e1eb;
+    border-radius: 10px;
+    font: inherit;
+    background: #fff;
+}
+
+.student-search input:focus {
+    outline: 2px solid #90caf9;
+    outline-offset: 2px;
+}
+
+.student {
+    cursor: pointer;
+}
+
+.student:focus-visible {
+    outline: 2px solid #42a5f5;
+    outline-offset: 3px;
+}
+
+.student-detail-panel {
+    margin: 16px 0;
+    padding: 18px;
+    border: 1px solid #d8e1eb;
+    border-radius: 12px;
+    background: #f8fbff;
+}
+
+.student-detail-panel[hidden] {
+    display: none;
+}
+
+.student-detail-panel h3 {
+    margin-top: 0;
+}
+
+.student-detail-scores {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.student-detail-score {
+    padding: 12px 8px;
+    text-align: center;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #e3eaf2;
+}
+
+.student-detail-score strong {
+    display: block;
+    font-size: 20px;
+    margin-top: 6px;
+}
+
+.student-detail-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
+}
+
+.student-detail-actions button {
+    padding: 9px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #e3f2fd;
+    color: #1565c0;
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .student-detail-scores {
+        grid-template-columns: 1fr;
+    }
+}
 
     </style>
 
@@ -683,6 +812,17 @@
         <h2>
             📈 พัฒนาการรายบุคคล
         </h2>
+
+<div class="student-search">
+    <input
+        type="search"
+        id="studentSearch"
+        placeholder="ค้นหาชื่อหรือเลขที่นักเรียน..."
+        aria-label="ค้นหานักเรียนด้วยชื่อหรือเลขที่"
+    />
+</div>
+
+<div id="studentDetailPanel" class="student-detail-panel" hidden></div>
 
         <div id="studentProgressList"></div>
 

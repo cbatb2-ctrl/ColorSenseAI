@@ -445,3 +445,138 @@ function renderAttemptAverageChart() {
 }
 
 document.addEventListener("DOMContentLoaded", renderAttemptAverageChart);
+
+function renderStudentDetail(student) {
+    const panel = document.getElementById("studentDetailPanel");
+
+    if (!panel || !student) return;
+
+    const scores = student.attempts.filter(Number.isFinite);
+    const best = scores.length ? Math.max(...scores) : 0;
+    const first = scores.length ? scores[0] : 0;
+    const latest = scores.length ? scores[scores.length - 1] : 0;
+    const development = latest - first;
+
+    const scoreCards = scores.map((score, index) => `
+        <div class="student-detail-score">
+            ครั้งที่ ${index + 1}
+            <strong>${score}%</strong>
+        </div>
+    `).join("");
+
+    panel.innerHTML = `
+        <h3>${student.name}</h3>
+        <p>เลขที่ ${student.number} | ห้อง ${student.room}</p>
+        <p>สีเป้าหมาย: ${student.targetColor}</p>
+
+        <div class="student-detail-scores">
+            ${scoreCards}
+        </div>
+
+        <p>คะแนนสูงสุด: <strong>${best}%</strong></p>
+        <p>พัฒนาการจากครั้งแรกถึงครั้งล่าสุด:
+            <strong>${development >= 0 ? "+" : ""}${development} จุด</strong>
+        </p>
+
+        <div class="student-detail-actions">
+            <button type="button" id="closeStudentDetail">
+                ปิดรายละเอียด
+            </button>
+        </div>
+    `;
+
+    panel.hidden = false;
+
+    document.getElementById("closeStudentDetail")
+        .addEventListener("click", () => {
+            panel.hidden = true;
+        });
+}
+
+function setupStudentSearch() {
+    const search = document.getElementById("studentSearch");
+    const list = document.getElementById("studentProgressList");
+
+    if (!search || !list) return;
+
+    function filterStudents() {
+        const query = search.value.trim().toLocaleLowerCase();
+
+        const filtered = dashboardStudents.filter(student => {
+            return (
+                String(student.name).toLocaleLowerCase().includes(query) ||
+                String(student.number).includes(query) ||
+                String(student.room).toLocaleLowerCase().includes(query)
+            );
+        });
+
+        list.innerHTML = filtered.map(student => {
+            const best = getBestScore(student);
+            const development = getDevelopment(student);
+
+            const attemptHTML = student.attempts.map((score, index) => `
+                <span class="attempt">
+                    ครั้งที่ ${index + 1}: ${score}%
+                </span>
+            `).join("");
+
+            return `
+                <div class="student"
+                     tabindex="0"
+                     role="button"
+                     data-student-number="${student.number}"
+                     aria-label="ดูรายละเอียด ${student.name}">
+                    <div class="student-header">
+                        <span class="student-name">${student.name}</span>
+                        <span class="student-best">Best ${best}%</span>
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width:${best}%"></div>
+                    </div>
+
+                    <div class="attempts">
+                        ${attemptHTML}
+                        <span class="improvement">
+                            ${development >= 0 ? "+" : ""}${development} จุด
+                        </span>
+                    </div>
+                </div>
+            `;
+        }).join("");
+
+        if (filtered.length === 0) {
+            list.textContent = "ไม่พบนักเรียนที่ตรงกับคำค้นหา";
+        }
+    }
+
+    function selectStudent(event) {
+        const item = event.target.closest("[data-student-number]");
+        if (!item || !list.contains(item)) return;
+
+        const number = Number(item.dataset.studentNumber);
+        const student = dashboardStudents.find(
+            student => student.number === number
+        );
+
+        if (student) renderStudentDetail(student);
+    }
+
+    search.addEventListener("input", filterStudents);
+
+    list.addEventListener("click", selectStudent);
+
+    list.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+            const item = event.target.closest("[data-student-number]");
+            if (!item) return;
+
+            event.preventDefault();
+            selectStudent(event);
+        }
+    });
+
+    filterStudents();
+}
+
+document.addEventListener("DOMContentLoaded", setupStudentSearch);
